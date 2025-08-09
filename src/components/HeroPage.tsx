@@ -1,8 +1,11 @@
+"use client";
+
 import clsx from "clsx";
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { motion, Variants } from "framer-motion";
 
 // function Photos() {
 //   const rotations = [
@@ -69,7 +72,30 @@ import { ArrowRight } from "lucide-react";
 //   );
 // }
 
-function PhotosMasonry() {
+// function PhotosMasonry() {
+//   const images = Array.from(
+//     { length: 10 },
+//     (_, i) => `/images/${i + 1}.${[6, 7].includes(i + 1) ? "jpg" : "png"}`
+//   );
+
+//   return (
+//     <div className="mt-16 px-4">
+//       <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 [column-fill:_balance]">
+//         {images.map((src) => (
+//           <img
+//             key={src}
+//             src={src}
+//             alt=""
+//             className="mb-6 w-full break-inside-avoid rounded-2xl shadow-lg ring-1 ring-black/5 hover:opacity-95 transition"
+//             loading="lazy"
+//           />
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+export function PhotosMasonry() {
   const images = Array.from(
     { length: 10 },
     (_, i) => `/images/${i + 1}.${[6, 7].includes(i + 1) ? "jpg" : "png"}`
@@ -78,16 +104,130 @@ function PhotosMasonry() {
   return (
     <div className="mt-16 px-4">
       <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 [column-fill:_balance]">
-        {images.map((src) => (
-          <img
+        {images.map((src, i) => (
+          <motion.img
             key={src}
             src={src}
             alt=""
-            className="mb-6 w-full break-inside-avoid rounded-2xl shadow-lg ring-1 ring-black/5 hover:opacity-95 transition"
+            initial={{ y: 14, opacity: 0, scale: 0.98 }}
+            whileInView={{ y: 0, opacity: 1, scale: 1 }}
+            viewport={{ once: false, margin: "0px 0px -10% 0px" }}
+            transition={{
+              duration: 0.45,
+              ease: "easeOut",
+              delay: (i % 6) * 0.05,
+            }}
+            className="mb-6 w-full break-inside-avoid rounded-2xl shadow-lg ring-1 ring-black/5 hover:opacity-95 hover:-translate-y-1 transition will-change-transform"
             loading="lazy"
           />
         ))}
       </div>
+    </div>
+  );
+}
+// const lineVariants = {
+//   hiddenLeft: { x: -30, opacity: 0 },
+//   hiddenRight: { x: 30, opacity: 0 },
+//   show: {
+//     x: 0,
+//     opacity: 1,
+//     transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+//   },
+// };
+
+// const EASE = [0.22, 1, 0.36, 1] as const; // 👈 tuple, not number[]
+
+const headingVariants: Variants = {
+  hiddenUp: { y: -16, opacity: 0 },
+  hiddenDown: { y: 16, opacity: 0 },
+  show: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.45, ease: "easeOut" },
+  },
+};
+
+// export function HeroHeading() {
+//   return (
+//     <div className="relative text-center mt-20 min-h-[50vh] flex flex-col items-center justify-center">
+//       {/* red glow under the heading */}
+//       <div
+//         className="absolute z-0 blur-[120px] rounded-full bg-red-600 opacity-45 w-[800px] h-[300px]"
+//         style={{ top: "70%", left: "50%", transform: "translate(-50%, -50%)" }}
+//       />
+
+//       <div className="relative z-10">
+//         <motion.span
+//           initial="hiddenUp"
+//           whileInView="show"
+//           viewport={{ once: false, amount: 0.6 }} // retrigger on re-enter
+//           variants={headingVariants}
+//           className="block text-[140px] leading-[1] tracking-[-5.6px] font-sans text-[#F5F7F5]"
+//         >
+//           Big Agency Work.
+//         </motion.span>
+
+//         <motion.span
+//           initial="hiddenDown"
+//           whileInView="show"
+//           viewport={{ once: false, amount: 0.6 }}
+//           variants={headingVariants}
+//           transition={{ delay: 0.06 }} // tiny stagger
+//           className="block text-[140px] leading-[1] tracking-[-5.6px] font-sans text-[#F5F7F5]"
+//         >
+//           Small Agency Energy.
+//         </motion.span>
+//       </div>
+//     </div>
+//   );
+// }
+
+export function HeroHeading() {
+  return (
+    <div className="relative text-center mt-20 min-h-[70vh] flex flex-col items-center justify-center">
+      {/* red glow under the heading */}
+      <div
+        className="absolute z-0 blur-[120px] rounded-full bg-red-600 opacity-45 w-[800px] h-[300px]"
+        style={{ top: "70%", left: "50%", transform: "translate(-50%, -50%)" }}
+      />
+
+      <div className="relative z-10">
+        <motion.span
+          initial="hiddenUp"
+          whileInView="show"
+          viewport={{ once: false, amount: 0.6 }} // retrigger on re-enter
+          variants={headingVariants}
+          className="block text-[140px] leading-[1] tracking-[-5.6px] font-sans text-[#F5F7F5]"
+        >
+          Big Agency Work.
+        </motion.span>
+
+        <motion.span
+          initial="hiddenDown"
+          whileInView="show"
+          viewport={{ once: false, amount: 0.6 }}
+          variants={headingVariants}
+          transition={{ delay: 0.06 }} // tiny stagger
+          className="block text-[140px] leading-[1] tracking-[-5.6px] font-sans text-[#F5F7F5]"
+        >
+          Small Agency Energy.
+        </motion.span>
+      </div>
+
+      <motion.div
+        initial={{ y: 10, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
+        className="relative z-10"
+      >
+        <Link
+          href="#contact"
+          className="mt-12 inline-flex items-center gap-3 rounded-bl-3xl rounded-tr-3xl bg-gray-300/20 px-6 py-4 text-lg font-semibold text-red-200 ring-1 ring-white/15 backdrop-blur-md hover:bg-gray-300/25 transition"
+        >
+          Say Hello <ArrowRight />
+        </Link>
+      </motion.div>
     </div>
   );
 }
@@ -138,13 +278,12 @@ export function PhotosGrid() {
 
 function HeroPage() {
   return (
-    <section className="relative isolate min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
-      <div className="text-center mt-20 min-h-[70vh] flex flex-col items-center justify-center relative">
-        {/* Red glow underneath heading */}
+    <section className="custom-scrollbar relative isolate min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
+      {/* <div className="text-center mt-20 min-h-[70vh] flex flex-col items-center justify-center relative">
         <div
           className="absolute z-0 blur-[120px] rounded-full bg-red-600 opacity-50 w-[800px] h-[300px]"
           style={{
-            top: "70%", // slight offset below the middle of heading
+            top: "70%", 
             left: "50%",
             transform: "translate(-50%, -50%)",
           }}
@@ -162,7 +301,9 @@ function HeroPage() {
           Say Hello
           <ArrowRight />
         </Link>
-      </div>
+      </div> */}
+
+      <HeroHeading />
 
       <PhotosMasonry />
     </section>
