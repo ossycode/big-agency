@@ -191,13 +191,13 @@ export function HeroHeading() {
         style={{ top: "70%", left: "50%", transform: "translate(-50%, -50%)" }}
       />
 
-      <div className="relative z-10">
+      <div className="relative z-10 px-1.5 space-y-4 sm:space-y-0 ">
         <motion.span
           initial="hiddenUp"
           whileInView="show"
           viewport={{ once: false, amount: 0.6 }} // retrigger on re-enter
           variants={headingVariants}
-          className="block text-[140px] leading-[1] tracking-[-5.6px] font-sans text-[#F5F7F5]"
+          className="block text-[60px]  lg:text-[140px] leading-[1] tracking-[-5.6px] font-sans text-[#F5F7F5]"
         >
           Big Agency Work.
         </motion.span>
@@ -208,7 +208,7 @@ export function HeroHeading() {
           viewport={{ once: false, amount: 0.6 }}
           variants={headingVariants}
           transition={{ delay: 0.06 }} // tiny stagger
-          className="block text-[140px] leading-[1] tracking-[-5.6px] font-sans text-[#F5F7F5]"
+          className="block text-[60px] lg:text-[140px] leading-[1] tracking-[-5.6px] font-sans text-[#F5F7F5]"
         >
           Small Agency Energy.
         </motion.span>
